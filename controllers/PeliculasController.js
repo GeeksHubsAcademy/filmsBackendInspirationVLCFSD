@@ -30,4 +30,17 @@ PeliculasController.peliculasTitulo = async (req, res) => {
 
 }
 
+PeliculasController.traeNovedades = async (req, res) => {
+
+    try {
+
+        let resultados = await axios.get("https://api.themoviedb.org/3/movie/upcoming?api_key=210d6a5dd3f16419ce349c9f1b200d6d&language=es-ES&page=1");
+
+        res.send(resultados.data);
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 module.exports = PeliculasController;

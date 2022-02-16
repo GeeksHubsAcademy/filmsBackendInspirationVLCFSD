@@ -1,4 +1,5 @@
 
+const { Router } = require('express');
 const express = require('express');
 const router = express.Router();
 
@@ -17,6 +18,9 @@ router.post('/', PeliculasController.registraPelicula);
 
 //Búsqueda de películas por título
 router.get('/titulo', PeliculasController.peliculasTitulo);
+
+//Búsqueda de novedades
+router.get('/novedades', PeliculasController.traeNovedades);
 
 
 module.exports = router;
