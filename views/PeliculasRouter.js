@@ -7,13 +7,16 @@ const PeliculasController = require('../controllers/PeliculasController');
 
 //CRUD RESTful
 
-//Leer todos los usuarios
+//Leer todas las peliculas
 router.get('/', PeliculasController.traePeliculas);
 //http://localhost:3000/peliculas
 
-//Registro
+//Registro de una peli nueva
 router.post('/', PeliculasController.registraPelicula);
 //http://localhost:3000/peliculas
+
+//Búsqueda de películas por título
+router.get('/titulo', PeliculasController.peliculasTitulo);
 
 
 module.exports = router;

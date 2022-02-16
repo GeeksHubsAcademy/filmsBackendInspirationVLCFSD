@@ -18,7 +18,10 @@ let corsOptions = {//CONFIGURO OPCIONES DE CORS
 app.use(express.json()); //PUEDO OBTENER JSON DEL BODY
 app.use(cors(corsOptions));  //USO CORS
 
+
 app.use(router);
+
+
 
 app.listen(PORT, ()=> {
     console.log(`Servidor arriba y funcionando en el puerto ${PORT}`);
