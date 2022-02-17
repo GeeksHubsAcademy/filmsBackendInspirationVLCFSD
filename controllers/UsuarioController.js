@@ -7,11 +7,34 @@ const UsuarioController = {};
 //Funciones del controlador
 
 UsuarioController.traeUsuarios = (req, res) => {
+    //Búsqueda trayendo a todos los usuarios
+    Usuario.findAll()
+    .then(data => {
+
+        res.send(data)
+    });
 
 };
 
+UsuarioController.traerUsuarioId = (req, res) => {
+    //Búsqueda buscando una Id
+    Usuario.findByPk(req.params.id)
+    .then(data => {
+        res.send(data)
+    });
+};
+
+UsuarioController.traerUsuarioEmail = (req, res) => {
+    //Búsqueda comparando un campo
+    Usuario.findOne({ where : { email : req.params.email }})
+    .then(data => {
+        res.send(data)
+    });
+}
+
 UsuarioController.registraUsuario = async (req, res) => {
 
+    //Registrando un usuario
     
     try {
 
