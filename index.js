@@ -2,6 +2,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const db = require('./db.js');
 
 const PORT = 3000;
 
@@ -22,8 +23,7 @@ app.use(cors(corsOptions));  //USO CORS
 app.use(router);
 
 
-
-app.listen(PORT, ()=> {
-    console.log(`Servidor arriba y funcionando en el puerto ${PORT}`);
-});
-
+db.then(()=>{
+    app.listen(PORT, ()=> console.log(`Server on port ${PORT}`)); //Conectado a la base de datos
+})
+.catch((err)=> console.log(err.message));   
