@@ -1,5 +1,7 @@
 
 const { Usuario } = require('../models/index');
+const bcrypt = require('bcrypt');
+const authConfig = require('../config/auth');
 
 const UsuarioController = {};
 
@@ -33,19 +35,22 @@ UsuarioController.traerUsuarioEmail = (req, res) => {
 }
 
 UsuarioController.registraUsuario = async (req, res) => {
-
+    
     //Registrando un usuario
     
     try {
+
+        
 
         let name = req.body.name;
         let age = req.body.age;
         let surname = req.body.surname;
         let nickname = req.body.nickname;
         let email = req.body.email;
-
+        let password = bcrypt.hashSync(req.body.password, Number.parseInt(authConfig.rounds)); 
+        
         //Comprobación de errores.....
-
+        
         //Guardamos en sequelize el usuario
 
         Usuario.create({
@@ -53,6 +58,7 @@ UsuarioController.registraUsuario = async (req, res) => {
             age: age,
             surname: surname,
             email: email,
+            password: password,
             nickname: nickname
         }).then(usuario => {
             console.log("este es mi amigo", usuario);
@@ -73,7 +79,7 @@ UsuarioController.updateProfile = async (req, res) => {
 
     try {
 
-        Usuario.update(req.body, {
+        Usuario.update(datos, {
             where: {id : id}
         })
         .then(actualizado => {
