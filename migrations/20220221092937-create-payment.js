@@ -1,30 +1,28 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Peliculas', {
+    await queryInterface.createTable('Payments', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      titulo: {
+      card: {
         type: Sequelize.STRING
       },
-      sinopsis: {
+      paypal: {
         type: Sequelize.STRING
       },
-      adult: {
-        type: Sequelize.BOOLEAN
-      },
-      popularity: {
-        type: Sequelize.FLOAT
-      },
-      image: {
-        type: Sequelize.STRING
-      },
-      fecha: {
-        type: Sequelize.DATE
+      usuarioId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Usuarios',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       createdAt: {
         allowNull: false,
@@ -37,6 +35,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Peliculas');
+    await queryInterface.dropTable('Payments');
   }
 };
