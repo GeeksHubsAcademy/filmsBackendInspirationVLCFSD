@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const auth = require("../middlewares/auth");
+const isAdmin = require("../middlewares/isAdmin");
 
 const UsuarioController = require('../controllers/UsuarioController');
 
@@ -23,7 +24,7 @@ router.post('/', UsuarioController.registraUsuario);
 router.put('/:id', auth, UsuarioController.updateProfile);
 
 //Borramos a todos los usuarios
-router.delete('/', auth, UsuarioController.deleteAll);
+router.delete('/', isAdmin, UsuarioController.deleteAll);
 
 //Borramos a todos los usuarios
 router.delete('/:id', auth, UsuarioController.deleteById);
