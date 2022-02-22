@@ -1,5 +1,6 @@
 
 const { Usuario } = require('../models/index');
+const { Op } = require("sequelize");
 const bcrypt = require('bcrypt');
 const authConfig = require('../config/auth');
 const jwt = require('jsonwebtoken');
@@ -39,10 +40,6 @@ UsuarioController.registraUsuario = async (req, res) => {
     
     //Registrando un usuario
     
-    try {
-
-        
-
         let name = req.body.name;
         let age = req.body.age;
         let surname = req.body.surname;
@@ -56,20 +53,50 @@ UsuarioController.registraUsuario = async (req, res) => {
         
         //Guardamos en sequelize el usuario
 
-        Usuario.create({
-            name: name,
-            age: age,
-            surname: surname,
-            email: email,
-            password: password,
-            nickname: nickname
-        }).then(usuario => {
-            res.send(`${usuario.name}, bienvenida a este infierno`);
+        Usuario.findAll({
+            where : {
+
+                [Op.or] : [
+                    {
+                        email : {
+                            [Op.like] : email
+                        }
+                    },
+                    {
+                        nickname : {
+                            [Op.like] : nickname
+                        }
+                    }
+                ]
+
+            }
+
+        }).then(datosRepetidos => {
+
+            if(datosRepetidos == 0){
+
+                    Usuario.create({
+                    name: name,
+                    age: age,
+                    surname: surname,
+                    email: email,
+                    password: password,
+                    nickname: nickname
+                }).then(usuario => {
+                    res.send(`${usuario.name}, bienvenida a este infierno`);
+                })
+                .catch((error) => {
+                    res.send(error);
+                });
+
+            }else {
+                res.send("El usuario con ese e-mail ya existe en nuestra base de datos");
+            }
+        }).catch(error => {
+            res.send(error)
         });
 
-    } catch (error) {
-        res.send(error);
-    }
+    
     
 };
 
