@@ -21,7 +21,9 @@ router.post('/', UsuarioController.registraUsuario);
 //http://localhost:3000/usuarios
 
 //Modificar datos de un Usuario
+router.put('/newpassword', auth, UsuarioController.updatePassword);
 router.put('/:id', auth, UsuarioController.updateProfile);
+
 
 //Borramos a todos los usuarios
 router.delete('/', isAdmin, UsuarioController.deleteAll);
